@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email
+  template:
+    metadata:
+      labels:
+        app: email
+    spec:
+      containers:
+        - name: email
+          image: felixphil/email
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: artisans
+            - name: EMAIL_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: email-secret
+                  key: EMAIL_API_KEY
+            - name: EMAIL_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: email-secret
+                  key: EMAIL_DOMAIN

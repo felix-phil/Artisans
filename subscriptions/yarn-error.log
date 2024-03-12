@@ -1,0 +1,73 @@
+Arguments: 
+  /usr/bin/node /home/felix/.yarn/bin/yarn.js install
+
+PATH: 
+  /home/felix/.yarn/bin:/home/felix/.config/yarn/global/node_modules/.bin:/home/felix/anaconda3/bin:/home/felix/anaconda3/condabin:/home/felix/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/felix/android-sdk/tools/bin/tools:/usr/lib/jvm/java-8-openjdk-amd64/jre//bin
+
+Yarn version: 
+  1.22.15
+
+Node version: 
+  16.15.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: Client network socket disconnected before secure TLS connection was established
+      at connResetException (node:internal/errors:692:14)
+      at TLSSocket.onConnectEnd (node:_tls_wrap:1587:19)
+      at TLSSocket.emit (node:events:539:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "authentication",
+    "version": "1.0.0",
+    "main": "index.ts",
+    "license": "MIT",
+    "scripts": {
+      "start": "ts-node-dev src/index.ts",
+      "test": "jest --watchAll --no-cache",
+      "test:ci": "jest"
+    },
+    "jest": {
+      "preset": "ts-jest",
+      "testEnvironment": "node",
+      "setupFilesAfterEnv": [
+        "./src/test/setup.ts"
+      ]
+    },
+    "dependencies": {
+      "@theartisans/shared": "^1.0.6",
+      "@types/cookie-session": "^2.0.44",
+      "@types/express": "^4.17.13",
+      "@types/jsonwebtoken": "^8.5.8",
+      "@types/otp-generator": "^4.0.0",
+      "cookie-session": "^2.0.0",
+      "express": "^4.18.1",
+      "express-async-errors": "^3.1.1",
+      "express-validator": "^6.14.0",
+      "jsonwebtoken": "^8.5.1",
+      "mongoose": "^6.3.1",
+      "node-nats-streaming": "^0.3.2",
+      "otp-generator": "^4.0.0",
+      "ts-node-dev": "^1.1.8",
+      "typescript": "^4.6.4"
+    },
+    "devDependencies": {
+      "@types/jest": "^27.4.1",
+      "@types/supertest": "^2.0.12",
+      "jest": "^27.4.1",
+      "mongodb-memory-server": "^7.5.1",
+      "supertest": "^6.2.3",
+      "ts-jest": "27.1.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

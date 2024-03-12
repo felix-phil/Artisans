@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing
+  template:
+    metadata:
+      labels:
+        app: billing
+    spec:
+      containers:
+        - name: billing
+          image: felixphil/billing
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: artisans
+            - name: MONGO_URI
+              value: "mongodb://billing-mongo-srv:27017/billing"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: FLUTTERWAVE_PUBLIC
+              valueFrom:
+                secretKeyRef:
+                  name: flutterwave-secret
+                  key: FLUTTERWAVE_PUBLIC
+            - name: FLUTTERWAVE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: flutterwave-secret
+                  key: FLUTTERWAVE_SECRET
+            - name: REDIS_HOST
+              value: billing-redis-srv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-srv
+spec:
+  selector:
+    app: billing
+  ports:
+    - name: billing
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

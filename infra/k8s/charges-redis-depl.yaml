@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: charges-redis-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: charges-redis
+  template:
+    metadata:
+      labels:
+        app: charges-redis
+    spec:
+      containers:
+        - name: charges-redis
+          image: redis:alpine
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: charges-redis-srv
+spec:
+  selector:
+    app: charges-redis
+  ports:
+    - name: redis
+      protocol: TCP
+      port: 6379
+      targetPort: 6379

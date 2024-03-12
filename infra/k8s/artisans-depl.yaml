@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artisans-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artisans
+  template:
+    metadata:
+      labels:
+        app: artisans
+    spec:
+      containers:
+        - name: artisans
+          image: felixphil/artisans
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: artisans
+            - name: MONGO_URI
+              value: "mongodb://artisans-mongo-srv:27017/artisans"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: AWS_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: AWS_BUCKET_NAME
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: AWS_REGION
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: AWS_ACCESS_KEY
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret
+                  key: AWS_SECRET_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: artisans-srv
+spec:
+  selector:
+    app: artisans
+  ports:
+    - name: artisans
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

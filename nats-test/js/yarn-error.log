@@ -1,0 +1,39 @@
+Arguments: 
+  /usr/bin/node /home/felix/.yarn/bin/yarn.js add node-nats-streaming ts-node-dev typescript @types/node
+
+PATH: 
+  /home/felix/.yarn/bin:/home/felix/.config/yarn/global/node_modules/.bin:/home/felix/anaconda3/bin:/home/felix/anaconda3/condabin:/home/felix/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/felix/android-sdk/tools/bin/tools:/usr/lib/jvm/java-8-openjdk-amd64/jre//bin
+
+Yarn version: 
+  1.22.15
+
+Node version: 
+  16.13.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/node-nats-streaming: tunneling socket could not be established, cause=connect ECONNREFUSED 192.168.43.1:8080
+      at ClientRequest.onError (/home/felix/.yarn/lib/cli.js:152371:17)
+      at Object.onceWrapper (node:events:510:26)
+      at ClientRequest.emit (node:events:390:28)
+      at Socket.socketErrorListener (node:_http_client:447:9)
+      at Socket.emit (node:events:390:28)
+      at emitErrorNT (node:internal/streams/destroy:157:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+
+npm manifest: 
+  {
+    "name": "nats-test",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

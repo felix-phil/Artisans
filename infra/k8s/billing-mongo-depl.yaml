@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing-mongo
+  template:
+    metadata:
+      labels:
+        app: billing-mongo
+    spec:
+      containers:
+        - name: billing-mongo
+          image: mongo:4.4
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-mongo-srv
+spec:
+  selector:
+    app: billing-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

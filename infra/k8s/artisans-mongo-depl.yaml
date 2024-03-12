@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: artisans-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: artisans-mongo
+  template:
+    metadata:
+      labels:
+        app: artisans-mongo
+    spec:
+      containers:
+        - name: artisans-mongo
+          image: mongo:4.4
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: artisans-mongo-srv
+spec:
+  selector:
+    app: artisans-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

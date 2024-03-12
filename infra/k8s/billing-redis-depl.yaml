@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing-redis-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing-redis
+  template:
+    metadata:
+      labels:
+        app: billing-redis
+    spec:
+      containers:
+        - name: billing-redis
+          image: redis:alpine
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-redis-srv
+spec:
+  selector:
+    app: billing-redis
+  ports:
+    - name: redis
+      protocol: TCP
+      port: 6379
+      targetPort: 6379

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: charges-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: charges-mongo
+  template:
+    metadata:
+      labels:
+        app: charges-mongo
+    spec:
+      containers:
+        - name: charges-mongo
+          image: mongo:4.4
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: charges-mongo-srv
+spec:
+  selector:
+    app: charges-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

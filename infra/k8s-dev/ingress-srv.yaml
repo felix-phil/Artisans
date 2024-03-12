@@ -1,0 +1,57 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: artisans.com
+      http:
+        paths:
+          - path: /artisans/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: artisans-srv
+                port:
+                  number: 3000
+    - host: api.artisans.com
+      http:
+        paths:
+          - path: /artisans/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: artisans-srv
+                port:
+                  number: 3000
+          - path: /authentication/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: authentication-srv
+                port:
+                  number: 3000
+          - path: /subscription/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: subscription-srv
+                port:
+                  number: 3000
+          - path: /billing/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: billing-srv
+                port:
+                  number: 3000
+          - path: /charges/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: charges-srv
+                port:
+                  number: 3000
